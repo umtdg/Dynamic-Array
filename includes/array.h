@@ -16,11 +16,28 @@
 #endif
 
 
+/* Typedefs for types with spaces */
+
+typedef unsigned char UByte;
+
+typedef signed char SByte;
+
+typedef unsigned short UShort;
+
+typedef unsigned int UInt;
+
+typedef unsigned long ULong;
+
+/* Typedefs for types with spaces */
+
+
 /* Defaults */
 
 #define ArrayDefaultInitialSize 32
 
 #define ArrayDefaultGrowthRate ArrayDefaultInitialSize
+
+/* Defaults */
 
 
 // Name of the structure of the array
@@ -48,7 +65,7 @@
 
 #define ArrayAppendFunction(type) append_##type
 
-/* End of macros for function names */
+/* Macros for function names */
 
 
 /* Function declaration macros */
@@ -136,7 +153,7 @@
     return True; \
 }
 
-/* End of function body macros */
+/* Function body macros */
 
 
 /* Macros for .h and .c files */
@@ -155,3 +172,5 @@ ArrayInitFunctionBody(type); \
 ArrayDeleteFunctionBody(type); \
 ArrayExpandFunctionBody(type); \
 ArrayAppendFunctionBody(type)
+
+/* Macros for .h and .c files */
