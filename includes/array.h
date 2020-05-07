@@ -20,7 +20,7 @@
 
 typedef unsigned char UByte;
 
-typedef signed char SByte;
+typedef signed char Byte;
 
 typedef unsigned short UShort;
 
