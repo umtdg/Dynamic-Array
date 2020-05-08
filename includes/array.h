@@ -72,7 +72,6 @@ typedef unsigned long ULong;
 
 // Initialize the array structure
 #define ArrayInitFunctionDeclaration(type) Bool ArrayInitFunction(type)(Array(type)* instance, \
-    size_t capacity, \
     size_t initialSize, \
     size_t growthRate)
 
