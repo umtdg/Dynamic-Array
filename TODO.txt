@@ -1,0 +1,4 @@
+[ ] - Add concatenate function
+[ ] - Add remove function
+[ ] - Add pop function
+[ ] - Add foreach function (how?)
