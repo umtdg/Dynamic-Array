@@ -5,6 +5,7 @@
 #include "test_slice.h"
 #include "test_foreach.h"
 #include "test_pop.h"
+#include "test_map.h"
 #include "fails_codes.h"
 
 #include <time.h>
@@ -79,6 +80,8 @@ int main() {
     run_test(test_array_foreach_null_callback, "test_array_foreach_null_callback");
     run_test(test_array_pop_with_null_last, "test_array_pop_with_null_last");
     run_test(test_array_pop_with_nonnull_last, "test_array_pop_with_nonnull_last");
+    run_test(test_array_map_correct_params, "test_array_map_correct_params");
+    run_test(test_array_map_null_callback, "test_array_map_null_callback");
 
     return 0;
 }

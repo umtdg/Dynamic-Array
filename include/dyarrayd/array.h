@@ -73,6 +73,10 @@ typedef unsigned long ULong;
 
 #define ArrayPop(type) array_pop_##type
 
+#define ArrayMap(type) array_map_##type
+
+#define ArrayMapCallback(type) array_map_##type##_callback
+
 /* Macros for function names */
 
 
@@ -112,6 +116,13 @@ Bool ArrayInit(type)(Array(type)* instance,                                     
 
 // Remove the last element and set param last if not null
 #define ArrayPopDecl(type) Bool ArrayPop(type)(Array(type)* instance, type* last)
+
+// Callback function for map function
+#define ArrayMapCallbackDecl(type) typedef type (* ArrayMapCallback(type))(type)
+
+// Map each element of array with
+// the result of callback function
+#define ArrayMapDecl(type) Bool ArrayMap(type)(Array(type)* instance, ArrayMapCallback(type) callback)
 
 /* End of function declaration macros */
 
@@ -241,6 +252,20 @@ ArrayPopDecl(type) {                                                            
     return True;                                                                    \
 }
 
+// Map each element of array with
+// the result of callback function
+#define ArrayMapBody(type)                                                          \
+ArrayMapDecl(type) {                                                                \
+    if (!instance) return False;                                                    \
+    if (!callback) return False;                                                    \
+                                                                                    \
+    for (size_t i = 0; i < instance->Length; i++) {                                 \
+        instance->Buffer[i] = callback(instance->Buffer[i]);                        \
+    }                                                                               \
+                                                                                    \
+    return True;                                                                    \
+}
+
 /* Function body macros */
 
 
@@ -253,7 +278,9 @@ ArrayAppendDecl(type);                  \
 ArraySliceDecl(type);                   \
 ArrayForeachCallbackDecl(type);         \
 ArrayForeachDecl(type);                 \
-ArrayPopDecl(type)
+ArrayPopDecl(type);                     \
+ArrayMapCallbackDecl(type);             \
+ArrayMapDecl(type)
 
 
 /* Macros for .h and .c files */
@@ -267,6 +294,7 @@ ArrayExpandBody(type);                  \
 ArrayAppendBody(type);                  \
 ArraySliceBody(type);                   \
 ArrayForeachBody(type);                 \
-ArrayPopBody(type)
+ArrayPopBody(type);                     \
+ArrayMapBody(type)
 
 /* Macros for .h and .c files */
