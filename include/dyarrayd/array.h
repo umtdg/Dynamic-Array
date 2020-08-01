@@ -71,6 +71,8 @@ typedef unsigned long ULong;
 
 #define ArrayForeachCallback(type) array_foreach_##type##_callback
 
+#define ArrayPop(type) array_pop_##type
+
 /* Macros for function names */
 
 
@@ -107,6 +109,9 @@ Bool ArrayInit(type)(Array(type)* instance,                                     
 // Run specified function for each element in the array
 // Should be defined after ArrayForeachCallbackDecl
 #define ArrayForeachDecl(type) Bool ArrayForeach(type)(Array(type)* instance, ArrayForeachCallback(type) callback)
+
+// Remove the last element and set param last if not null
+#define ArrayPopDecl(type) Bool ArrayPop(type)(Array(type)* instance, type* last)
 
 /* End of function declaration macros */
 
@@ -218,6 +223,24 @@ ArrayForeachDecl(type) {                                                        
     return True;                                                                    \
 }                                                                                   \
 
+// Remove and return the last element
+// If the last item is zero, accessing
+// Buffer[Length] will give zero, which is
+// equal to last item
+#define ArrayPopBody(type)                                                          \
+ArrayPopDecl(type) {                                                                \
+    if (!instance) return False;                                                    \
+                                                                                    \
+    if (last) {                                                                     \
+        *last = instance->Buffer[instance->Length - 1];                             \
+    }                                                                               \
+                                                                                    \
+    memset(&(instance->Buffer[instance->Length - 1]), 0, sizeof(type));             \
+    instance->Length -= 1;                                                          \
+                                                                                    \
+    return True;                                                                    \
+}
+
 /* Function body macros */
 
 
@@ -229,7 +252,8 @@ ArrayExpandDecl(type);                  \
 ArrayAppendDecl(type);                  \
 ArraySliceDecl(type);                   \
 ArrayForeachCallbackDecl(type);         \
-ArrayForeachDecl(type)
+ArrayForeachDecl(type);                 \
+ArrayPopDecl(type)
 
 
 /* Macros for .h and .c files */
@@ -242,6 +266,7 @@ ArrayDeleteBody(type);                  \
 ArrayExpandBody(type);                  \
 ArrayAppendBody(type);                  \
 ArraySliceBody(type);                   \
-ArrayForeachBody(type)
+ArrayForeachBody(type);                 \
+ArrayPopBody(type)
 
 /* Macros for .h and .c files */

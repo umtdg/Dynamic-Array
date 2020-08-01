@@ -13,6 +13,7 @@ int test_array_append() {
     ArrayAppend(int)(&arr, 2);
     ArrayAppend(int)(&arr, 3);
     ArrayAppend(int)(&arr, 4);
+
     if (!ArrayAppend(int)(&arr, 5)) return FUNCTION_FAILED; // Should expand
 
     if (arr.Length != 5) return WRONG_LENGTH;
