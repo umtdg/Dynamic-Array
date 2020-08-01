@@ -5,12 +5,12 @@
 
 static int total = 0;
 
-void foreach_callback(int i) {
+void increase_total(int i) {
     total += i;
 }
 
 int test_array_foreach_correct_params() {
-    ArrayForeachCallback(int) cb = foreach_callback;
+    ArrayForeachCallback(int) cb = increase_total;
 
     Array(int) arr;
 
