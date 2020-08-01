@@ -72,7 +72,7 @@ int main() {
     run_test(test_array_expand, "test_array_expand");
     run_test(test_array_delete, "test_array_delete");
     run_test(test_array_append, "test_array_append");
-    run_test(test_array_slice_correct_params, "test_slice_correct_params");
+    run_test(test_array_slice_correct_params, "test_array_slice_correct_params");
     run_test(test_array_slice_incorrect_offset, "test_array_slice_incorrect_offset");
     run_test(test_array_slice_exceed_length, "test_array_slice_exceed_length");
     run_test(test_array_foreach_correct_params, "test_array_foreach_correct_params");
