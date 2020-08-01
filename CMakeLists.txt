@@ -6,7 +6,7 @@ project(dyarrayd
         LANGUAGES C)
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
-    set(CMAKE_C_STANDARD C11)
+    set(CMAKE_C_STANDARD 11)
 
     set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
