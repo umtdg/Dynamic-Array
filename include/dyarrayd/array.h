@@ -57,15 +57,19 @@ typedef unsigned long ULong;
 
 /* Macros for function names */
 
-#define ArrayInit(type) init_##type##_array
+#define ArrayInit(type) array_init_##type
 
-#define ArrayExpand(type) expand_##type##_array
+#define ArrayExpand(type) array_expand_##type
 
-#define ArrayDelete(type) delete_##type##_array
+#define ArrayDelete(type) array_delete_##type
 
-#define ArrayAppend(type) append_##type
+#define ArrayAppend(type) array_append_##type
 
-#define ArraySlice(type) slice_##type##_array
+#define ArraySlice(type) array_slice_##type
+
+#define ArrayForeach(type) array_foreach_##type
+
+#define ArrayForeachCallback(type) array_foreach_##type##_callback
 
 /* Macros for function names */
 
@@ -97,6 +101,13 @@ Bool ArrayInit(type)(Array(type)* instance,                                     
 // then slicing will stop at the end.
 #define ArraySliceDecl(type) Bool ArraySlice(type)(Array(type)* instance, size_t offset, size_t length)
 
+// Callback function for foreach function
+#define ArrayForeachCallbackDecl(type) typedef void (* ArrayForeachCallback(type))(type)
+
+// Run specified function for each element in the array
+// Should be defined after ArrayForeachCallbackDecl
+#define ArrayForeachDecl(type) Bool ArrayForeach(type)(Array(type)* instance, ArrayForeachCallback(type) callback)
+
 /* End of function declaration macros */
 
 
@@ -105,6 +116,8 @@ Bool ArrayInit(type)(Array(type)* instance,                                     
 // Initialize the array structure
 #define ArrayInitBody(type)                                                         \
 ArrayInitDecl(type) {                                                               \
+    if (!instance) return False;                                                    \
+                                                                                    \
     initialSize = (initialSize > 0) ? initialSize : ArrayDefaultInitialSize;        \
     growthRate = (growthRate > 0) ? growthRate : ArrayDefaultGrowthRate;            \
                                                                                     \
@@ -123,6 +136,7 @@ ArrayInitDecl(type) {                                                           
 // Also fills the Buffer with zeroes before free.
 #define ArrayDeleteBody(type)                                                       \
 ArrayDeleteDecl(type) {                                                             \
+    if (!instance) return;                                                          \
     memset(instance->Buffer, 0, instance->Size);                                    \
     free(instance->Buffer);                                                         \
     instance->Buffer = NULL;                                                        \
@@ -136,6 +150,8 @@ ArrayDeleteDecl(type) {                                                         
 // The Buffer will be extended by GrowthRate property.
 #define ArrayExpandBody(type)                                                       \
 ArrayExpandDecl(type) {                                                             \
+    if (!instance) return False;                                                    \
+                                                                                    \
     type* temp = (type*)realloc(                                                    \
         instance->Buffer,                                                           \
         sizeof(type) * (instance->Capacity + instance->GrowthRate)                  \
@@ -154,6 +170,8 @@ ArrayExpandDecl(type) {                                                         
 // is no space left.
 #define ArrayAppendBody(type)                                                       \
 ArrayAppendDecl(type) {                                                             \
+    if (!instance) return False;                                                    \
+                                                                                    \
     if (instance->Capacity == instance->Length)                                     \
         if (!(ArrayExpand(type)(instance))) return False;                           \
                                                                                     \
@@ -168,6 +186,7 @@ ArrayAppendDecl(type) {                                                         
 // returns False.
 #define ArraySliceBody(type)                                                        \
 ArraySliceDecl(type) {                                                              \
+    if (!instance) return False;                                                    \
     if (offset >= instance->Length) return False;                                   \
     if (offset + length > instance->Length) return False;                           \
                                                                                     \
@@ -186,10 +205,21 @@ ArraySliceDecl(type) {                                                          
     return True;                                                                    \
 }
 
+// Run specified function for each element in the array
+#define ArrayForeachBody(type)                                                      \
+ArrayForeachDecl(type) {                                                            \
+    if (!instance) return False;                                                    \
+    if (!callback) return False;                                                    \
+                                                                                    \
+    for (size_t i = 0; i < instance->Length; i++) {                                 \
+        callback(instance->Buffer[i]);                                              \
+    }                                                                               \
+                                                                                    \
+    return True;                                                                    \
+}                                                                                   \
+
 /* Function body macros */
 
-
-/* Macros for .h and .c files */
 
 #define MakeArrayHeadingFile(type)      \
 ArrayStructure(type);                   \
@@ -197,7 +227,12 @@ ArrayInitDecl(type);                    \
 ArrayDeleteDecl(type);                  \
 ArrayExpandDecl(type);                  \
 ArrayAppendDecl(type);                  \
-ArraySliceDecl(type)
+ArraySliceDecl(type);                   \
+ArrayForeachCallbackDecl(type);         \
+ArrayForeachDecl(type)
+
+
+/* Macros for .h and .c files */
 
 // Should include the header file created by
 // MakeArrayHeadingFile macro
@@ -206,6 +241,7 @@ ArrayInitBody(type);                    \
 ArrayDeleteBody(type);                  \
 ArrayExpandBody(type);                  \
 ArrayAppendBody(type);                  \
-ArraySliceBody(type)
+ArraySliceBody(type);                   \
+ArrayForeachBody(type)
 
 /* Macros for .h and .c files */
