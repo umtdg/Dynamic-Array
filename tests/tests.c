@@ -3,6 +3,7 @@
 #include "test_delete.h"
 #include "test_append.h"
 #include "test_slice.h"
+#include "test_foreach.h"
 #include "fails_codes.h"
 
 #include <time.h>
@@ -53,6 +54,8 @@ void run_test(testcase f, const char* name) {
                 printf(" Function returned False");
             case FUNCTION_SUCCEEDED:
                 printf("Function returned True");
+            case FUNCTION_LOGIC_FAILED:
+                printf(" Unexpected function execution");
             case ITEM_ERROR:
                 printf(" Unmatched items");
             default:
@@ -71,6 +74,8 @@ int main() {
     run_test(test_array_slice_correct_params, "test_slice_correct_params");
     run_test(test_array_slice_incorrect_offset, "test_array_slice_incorrect_offset");
     run_test(test_array_slice_exceed_length, "test_array_slice_exceed_length");
+    run_test(test_array_foreach_correct_params, "test_array_foreach_correct_params");
+    run_test(test_array_foreach_null_callback, "test_array_foreach_null_callback");
 
     return 0;
 }
