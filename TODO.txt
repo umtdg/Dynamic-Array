@@ -1,8 +1,8 @@
 # Incomplete
 [ ] - Add concatenate function
 [ ] - Add remove function (inverse of slice)
-[ ] - Add map function
 
 # Complete
 [x] - Add foreach function
 [x] - Add pop function
+[x] - Add map function
