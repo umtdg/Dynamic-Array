@@ -1,6 +1,7 @@
 # Incomplete
 [ ] - Add concatenate function
 [ ] - Add remove function (inverse of slice)
+[ ] - Add reverse function
 
 # Complete
 [x] - Add foreach function
