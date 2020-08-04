@@ -1,3 +1,3 @@
-#include "../include/dyarrayd/shortarray.h"
+#include <dyarrayd/shortarray.h>
 
 MakeArraySourceFile(short);

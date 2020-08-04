@@ -1,3 +1,3 @@
-#include "../include/dyarrayd/ulongarray.h"
+#include <dyarrayd/ulongarray.h>
 
 MakeArraySourceFile(ULong);

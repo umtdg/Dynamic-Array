@@ -1,3 +1,3 @@
-#include "../include/dyarrayd/intarray.h"
+#include <dyarrayd/intarray.h>
 
 MakeArraySourceFile(int);

@@ -1,3 +1,3 @@
-#include "../include/dyarrayd/longarray.h"
+#include <dyarrayd/longarray.h>
 
 MakeArraySourceFile(long);

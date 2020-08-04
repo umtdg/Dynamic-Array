@@ -1,5 +1,5 @@
 #pragma once
 
-#include "array.h"
+#include <dyarrayd/array.h>
 
 MakeArrayHeadingFile(ULong);
