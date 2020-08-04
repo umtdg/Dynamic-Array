@@ -1,9 +1,10 @@
 # Incomplete
 [ ] - Add concatenate function
 [ ] - Add remove function (inverse of slice)
-[ ] - Add reverse function
 
 # Complete
 [x] - Add foreach function
 [x] - Add pop function
 [x] - Add map function
+[x] - Add swap macro
+[x] - Add reverse function
