@@ -1,3 +1,3 @@
-#include "../include/dyarrayd/bytearray.h"
+#include <dyarrayd/bytearray.h>
 
 MakeArraySourceFile(Byte);
