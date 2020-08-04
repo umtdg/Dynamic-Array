@@ -6,6 +6,7 @@
 #include "test_foreach.h"
 #include "test_pop.h"
 #include "test_map.h"
+#include "test_swap.h"
 #include "fails_codes.h"
 
 #include <time.h>
@@ -93,6 +94,8 @@ int main() {
     run_test(test_array_pop_with_nonnull_last, "test_array_pop_with_nonnull_last");
     run_test(test_array_map_correct_params, "test_array_map_correct_params");
     run_test(test_array_map_null_callback, "test_array_map_null_callback");
+    run_test(test_array_auxiliary_swap_floats, "test_array_auxiliary_swap_floats");
+    run_test(test_array_auxiliary_swap_structures, "test_array_auxiliary_swap_structures");
 
     return 0;
 }

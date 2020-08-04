@@ -8,6 +8,7 @@ add_executable(dyarrayd-test
         test_slice.h
         test_foreach.h
         test_pop.h
-        test_map.h)
+        test_map.h
+        test_swap.h)
 
 target_link_libraries(dyarrayd-test PRIVATE dyarrayd)
