@@ -9,7 +9,8 @@ set(HEADER_LIST
         "${INCLUDE_DYARRAYD}/shortarray.h"
         "${INCLUDE_DYARRAYD}/uintarray.h"
         "${INCLUDE_DYARRAYD}/ulongarray.h"
-        "${INCLUDE_DYARRAYD}/ushortarray.h")
+        "${INCLUDE_DYARRAYD}/ushortarray.h"
+        "${INCLUDE_DYARRAYD}/auxiliary.h")
 
 set(SOURCE_LIST
         "bytearray.c"

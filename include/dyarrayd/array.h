@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <memory.h>
 
+#include <dyarrayd/auxiliary.h>
+
 #ifndef Bool
 #define Bool int
 #endif
@@ -77,6 +79,8 @@ typedef unsigned long ULong;
 
 #define ArrayMapCallback(type) array_map_##type##_callback
 
+#define ArrayReverse(type) array_reverse_##type
+
 /* Macros for function names */
 
 
@@ -123,6 +127,9 @@ Bool ArrayInit(type)(Array(type)* instance,                                     
 // Map each element of array with
 // the result of callback function
 #define ArrayMapDecl(type) Bool ArrayMap(type)(Array(type)* instance, ArrayMapCallback(type) callback)
+
+// Reverse the given array
+#define ArrayReverseDecl(type) Bool ArrayReverse(type)(Array(type)* instance)
 
 /* End of function declaration macros */
 
@@ -266,6 +273,18 @@ ArrayMapDecl(type) {                                                            
     return True;                                                                    \
 }
 
+// Reverse the given array
+#define ArrayReverseBody(type)                                                      \
+ArrayReverseDecl(type) {                                                            \
+    if (!instance) return False;                                                    \
+                                                                                    \
+    for (size_t i = 0, j = instance->Length-1; i < j; i++, j--) {    \
+        swap(instance->Buffer[i], instance->Buffer[j]);                             \
+    }                                                                               \
+                                                                                    \
+    return True;                                                                    \
+}
+
 /* Function body macros */
 
 
@@ -280,8 +299,8 @@ ArrayForeachCallbackDecl(type);         \
 ArrayForeachDecl(type);                 \
 ArrayPopDecl(type);                     \
 ArrayMapCallbackDecl(type);             \
-ArrayMapDecl(type)
-
+ArrayMapDecl(type);                     \
+ArrayReverseDecl(type)
 
 /* Macros for .h and .c files */
 
@@ -295,6 +314,7 @@ ArrayAppendBody(type);                  \
 ArraySliceBody(type);                   \
 ArrayForeachBody(type);                 \
 ArrayPopBody(type);                     \
-ArrayMapBody(type)
+ArrayMapBody(type);                     \
+ArrayReverseBody(type)
 
 /* Macros for .h and .c files */
