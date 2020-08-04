@@ -9,3 +9,5 @@
 #define FUNCTION_SUCCEEDED      9
 #define FUNCTION_LOGIC_FAILED   10
 #define ITEM_ERROR              11
+#define NOT_EQUAL               12
+#define EQUAL                   13

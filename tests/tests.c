@@ -52,14 +52,25 @@ void run_test(testcase f, const char* name) {
                 break;
             case WRONG_LENGTH:
                 printf(" Incorrect length");
+                break;
             case FUNCTION_FAILED:
                 printf(" Function returned False");
+                break;
             case FUNCTION_SUCCEEDED:
                 printf("Function returned True");
+                break;
             case FUNCTION_LOGIC_FAILED:
                 printf(" Unexpected function execution");
+                break;
             case ITEM_ERROR:
                 printf(" Unmatched items");
+                break;
+            case NOT_EQUAL:
+                printf(" Values are not equal, expected equal");
+                break;
+            case EQUAL:
+                printf(" Values are equal, expected not equal");
+                break;
             default:
                 break;
         }
