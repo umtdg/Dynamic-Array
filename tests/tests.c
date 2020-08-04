@@ -18,6 +18,8 @@
 typedef int (*testcase)();
 
 static clock_t start, end;
+static int succeeded_test_count;
+static int total_test_count;
 
 void run_test(testcase f, const char* name) {
     printf("%s ... ", name);
@@ -30,6 +32,7 @@ void run_test(testcase f, const char* name) {
 
     if (res == 0) {
         printf(SUCCESS_STRING);
+        succeeded_test_count++;
     }
     else {
         printf(FAIL_STRING);
@@ -77,10 +80,14 @@ void run_test(testcase f, const char* name) {
         }
     }
 
+    total_test_count++;
+
     printf(" %f ms\n", ((double)(end - start)) / CLOCKS_PER_SEC);
 }
 
 int main() {
+    succeeded_test_count = total_test_count = 0;
+
     run_test(test_array_init, "test_array_init");
     run_test(test_array_expand, "test_array_expand");
     run_test(test_array_delete, "test_array_delete");
@@ -96,6 +103,8 @@ int main() {
     run_test(test_array_map_null_callback, "test_array_map_null_callback");
     run_test(test_array_auxiliary_swap_floats, "test_array_auxiliary_swap_floats");
     run_test(test_array_auxiliary_swap_structures, "test_array_auxiliary_swap_structures");
+
+    printf("\n%d/%d of tests passed\n", succeeded_test_count, total_test_count);
 
     return 0;
 }
