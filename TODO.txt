@@ -1,6 +1,8 @@
 # Incomplete
 [ ] - Add concatenate function
 [ ] - Add remove function (inverse of slice)
+[ ] - Add a function to split array into chunks (low priority)
+[ ] - Add copy function (high priority)
 
 # Complete
 [x] - Add foreach function
