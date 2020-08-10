@@ -140,7 +140,6 @@ Bool ArrayInit(type)(Array(type)* instance,                                     
 #define ArrayInitBody(type)                                                         \
 ArrayInitDecl(type) {                                                               \
     if (!instance) return False;                                                    \
-    if (instance->Buffer) return False;                                             \
                                                                                     \
     initialSize = (initialSize > 0) ? initialSize : ArrayDefaultInitialSize;        \
     growthRate = (growthRate > 0) ? growthRate : ArrayDefaultGrowthRate;            \
@@ -219,7 +218,7 @@ ArraySliceDecl(type) {                                                          
     }                                                                               \
                                                                                     \
     memset(                                                                         \
-        instance->Buffer + length,                                 \
+        instance->Buffer + length,                                                  \
         0,                                                                          \
         instance->Size - (sizeof(type) * length)                                    \
     );                                                                              \
@@ -279,7 +278,7 @@ ArrayMapDecl(type) {                                                            
 ArrayReverseDecl(type) {                                                            \
     if (!instance) return False;                                                    \
                                                                                     \
-    for (size_t i = 0, j = instance->Length-1; i < j; i++, j--) {    \
+    for (size_t i = 0, j = instance->Length-1; i < j; i++, j--) {                   \
         swap(instance->Buffer[i], instance->Buffer[j]);                             \
     }                                                                               \
                                                                                     \
