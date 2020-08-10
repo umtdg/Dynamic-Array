@@ -140,6 +140,7 @@ Bool ArrayInit(type)(Array(type)* instance,                                     
 #define ArrayInitBody(type)                                                         \
 ArrayInitDecl(type) {                                                               \
     if (!instance) return False;                                                    \
+    if (instance->Buffer) return False;                                             \
                                                                                     \
     initialSize = (initialSize > 0) ? initialSize : ArrayDefaultInitialSize;        \
     growthRate = (growthRate > 0) ? growthRate : ArrayDefaultGrowthRate;            \
