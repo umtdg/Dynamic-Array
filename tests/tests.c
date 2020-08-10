@@ -8,6 +8,8 @@
 #include "test_map.h"
 #include "test_swap.h"
 #include "test_reverse.h"
+#include "test_clear.h"
+#include "test_copy.h"
 #include "fails_codes.h"
 
 #include <time.h>
@@ -105,6 +107,10 @@ int main() {
     run_test(test_array_auxiliary_swap_floats, "test_array_auxiliary_swap_floats");
     run_test(test_array_auxiliary_swap_structures, "test_array_auxiliary_swap_structures");
     run_test(test_array_reverse, "test_array_reverse");
+    run_test(test_array_clear, "test_array_clear");
+    run_test(test_array_copy_offset_overflow, "test_array_copy_offset_overflow");
+    run_test(test_array_copy_count_overflow, "test_array_copy_count_overflow");
+    run_test(test_array_copy_correct_params, "test_array_copy_correct_params");
 
     printf("\n%d/%d of tests passed\n", succeeded_test_count, total_test_count);
 

@@ -10,6 +10,8 @@ add_executable(dyarrayd-test
         test_pop.h
         test_map.h
         test_swap.h
-        test_reverse.h)
+        test_reverse.h
+        test_copy.h
+        test_clear.h)
 
 target_link_libraries(dyarrayd-test PRIVATE dyarrayd)

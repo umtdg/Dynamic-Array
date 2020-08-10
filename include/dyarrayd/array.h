@@ -81,6 +81,10 @@ typedef unsigned long ULong;
 
 #define ArrayReverse(type) array_reverse_##type
 
+#define ArrayClear(type) array_clear_##type
+
+#define ArrayCopy(type) array_copy_##type
+
 /* Macros for function names */
 
 
@@ -130,6 +134,13 @@ Bool ArrayInit(type)(Array(type)* instance,                                     
 
 // Reverse the given array
 #define ArrayReverseDecl(type) Bool ArrayReverse(type)(Array(type)* instance)
+
+// Copy contents of the array to the other
+// other array should be inited before calling this function
+#define ArrayCopyDecl(type) Bool ArrayCopy(type)(Array(type)* instance, Array(type)* other, size_t offset, size_t count)
+
+// Clear contents of the array
+#define ArrayClearDecl(type) Bool ArrayClear(type)(Array(type)* instance)
 
 /* End of function declaration macros */
 
@@ -285,9 +296,41 @@ ArrayReverseDecl(type) {                                                        
     return True;                                                                    \
 }
 
+// Clear contents of the array
+#define ArrayClearBody(type)                                                        \
+ArrayClearDecl(type) {                                                              \
+    if (!instance) return False;                                                    \
+                                                                                    \
+    memset(instance->Buffer, 0, instance->Size);                                    \
+    instance->Size = 0;                                                             \
+    instance->Length = 0;                                                           \
+                                                                                    \
+    return True;                                                                    \
+}
+
+// Copy contents of the array to the other
+// other array should be inited before calling this function
+#define ArrayCopyBody(type)                                                         \
+ArrayCopyDecl(type) {                                                               \
+    if (!instance || !other) return False;                                          \
+    if (offset >= instance->Length) return False;                                   \
+    if (offset + count > instance->Length) return False;                            \
+                                                                                    \
+    ArrayClear(type)(other);                                                        \
+                                                                                    \
+    for (size_t i = offset; i < offset + count; i++) {                              \
+        ArrayAppend(type)(other, instance->Buffer[i]);                              \
+    }                                                                               \
+                                                                                    \
+    return True;                                                                    \
+}
+
 /* Function body macros */
 
 
+/* Macros for .h and .c files */
+
+// Create header files with declarations
 #define MakeArrayHeadingFile(type)      \
 ArrayStructure(type);                   \
 ArrayInitDecl(type);                    \
@@ -300,9 +343,9 @@ ArrayForeachDecl(type);                 \
 ArrayPopDecl(type);                     \
 ArrayMapCallbackDecl(type);             \
 ArrayMapDecl(type);                     \
-ArrayReverseDecl(type)
-
-/* Macros for .h and .c files */
+ArrayReverseDecl(type);                 \
+ArrayClearDecl(type);                   \
+ArrayCopyDecl(type)
 
 // Should include the header file created by
 // MakeArrayHeadingFile macro
@@ -315,6 +358,8 @@ ArraySliceBody(type);                   \
 ArrayForeachBody(type);                 \
 ArrayPopBody(type);                     \
 ArrayMapBody(type);                     \
-ArrayReverseBody(type)
+ArrayReverseBody(type);                 \
+ArrayClearBody(type);                   \
+ArrayCopyBody(type)
 
 /* Macros for .h and .c files */
