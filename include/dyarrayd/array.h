@@ -362,4 +362,9 @@ ArrayReverseBody(type);                 \
 ArrayClearBody(type);                   \
 ArrayCopyBody(type)
 
+// Header only macro
+#define MakeArrayHeaderOnlyFile(type)   \
+ArrayStructure(type);                   \
+MakeArraySourceFile(type)
+
 /* Macros for .h and .c files */
